@@ -40,7 +40,7 @@ We use the following free third-party services:
 
 ## 7. Contact
 
-For questions or concerns, open an issue on our GitHub: [https://github.com/yourrepo/grascord](https://github.com/KONBYTEstudio/grascord)
+For questions or concerns, open an issue on our GitHub: [https://github.com/KONBYTEstudio/grascord](https://github.com/KONBYTEstudio/grascord)
 
 ---
 

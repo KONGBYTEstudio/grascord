@@ -1,11 +1,27 @@
 {
-    "emojiMap": {
-      "Valorant": "🧨",
-      "League of Legends": "🧙‍♂️",
-      "Apex Legends": "🔫",
-      "Counter-Strike 2": "💣"
-    },
-    "maxVCSize": 5,
-    "defaultEmoji": "🎮"
+  "emojiMap": {
+    "Valorant": "🧨",
+    "League of Legends": "🧙‍♂️",
+    "Apex Legends": "🔫",
+    "Counter-Strike 2": "💣"
+  },
+  "defaultEmoji": "🎮",
+  "maxVCSize": 5,
+  "puns": [
+    "Ich hab' mehr Puns als du Memes!",
+    "Zeit für 'nen Joint – äh, ich meine Punkt!",
+    "Unsere Wortspiele sind schärfer als Chili."
+  ],
+  "modules": {
+    "waszocken": true,
+    "summon": true,
+    "switch": true,
+    "help": true,
+    "settings": true,
+    "leaderboard": true,
+    "welcome": true,
+    "punEngine": true,
+    "voicejoint": true,
+    "module": true
   }
-  
+}
