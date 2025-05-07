@@ -1,0 +1,11 @@
+{
+    "emojiMap": {
+      "Valorant": "🧨",
+      "League of Legends": "🧙‍♂️",
+      "Apex Legends": "🔫",
+      "Counter-Strike 2": "💣"
+    },
+    "maxVCSize": 5,
+    "defaultEmoji": "🎮"
+  }
+  
