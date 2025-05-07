@@ -7,11 +7,20 @@
   },
   "defaultEmoji": "🎮",
   "maxVCSize": 5,
-  "puns": [
-    "Ich hab' mehr Puns als du Memes!",
-    "Zeit für 'nen Joint – äh, ich meine Punkt!",
-    "Unsere Wortspiele sind schärfer als Chili."
-  ],
+  {
+    // ...
+    "puns": [
+      "Ich hab' mehr Puns als du Memes!",
+      "Zeit für 'nen Joint – ähm, ich meine Punkt!",
+      "Unsere Wortspiele sind schärfer als Chili."
+    ],
+    "punsByCategory": {
+      "weed": ["Gras ist grüner auf der anderen Seite."],
+      "gaming": ["In-game Puns bringen extra XP."]
+    },
+    // ...
+  }
+  ,
   "modules": {
     "waszocken": true,
     "summon": true,
