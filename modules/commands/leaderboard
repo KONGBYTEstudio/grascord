@@ -1,0 +1,26 @@
+// modules/commands/leaderboard.js
+const fs = require('fs');
+const path = require('path');
+
+module.exports = {
+  name: 'leaderboard',
+  displayName: 'BrudiBoard',
+  description: 'Zeigt Top-Talker der Woche',
+  execute(message) {
+    const dataPath = path.join(__dirname, '../../data/vcStats.json');
+    if (!fs.existsSync(dataPath)) {
+      return message.reply('Noch keine Statistiken verfügbar.');
+    }
+    const stats = JSON.parse(fs.readFileSync(dataPath));
+    const sorted = Object.entries(stats)
+      .sort((a,b) => b[1] - a[1])
+      .slice(0,5);
+    let reply = '🥇 **Top Talker der Woche**\n';
+    sorted.forEach(([id, count], i) => {
+      const medal = ['🥇','🥈','🥉','🏅','🎖️'][i] || '🏅';
+      const user = message.client.users.cache.get(id)?.username || id;
+      reply += `${medal} ${user}: ${count} Joins\n`;
+    });
+    message.channel.send(reply);
+  }
+};
