@@ -1,38 +1,43 @@
 // modules/voicejoint.js
-const statsTracker = require('./statsTracker');
+const stats = require('./statsTracker');
 const { getGameActivity } = require('./presenceTracker');
 
 module.exports = {
   name: 'voicejoint',
-
-  /**
-   * Initialisiert den VoiceJoint-Listener.
-   * @param {Client} client
-   * @param {object} settings
-   * @param {function} sendMessage
-   */
   init(client, settings, sendMessage) {
-    client.on('voiceStateUpdate', (oldState, newState) => {
-      if (!newState.channelId || oldState.channelId === newState.channelId) {
+    client.on('voiceStateUpdate', (oldS, newS) => {
+      const guildId   = newS.guild.id;
+      const joinChan  = newS.channelId;
+      const leaveChan = oldS.channelId;
+
+      // 1) Join
+      if (!leaveChan && joinChan) {
+        const member = newS.member;
+        const vc     = newS.guild.channels.cache.get(joinChan);
+        const { emoji } = getGameActivity(member, settings.emojiMap, settings.defaultEmoji);
+        sendMessage(joinChan,
+          `${emoji} **${member.displayName}** joined **${vc.name}**`
+        );
+        stats.logJoin(guildId, joinChan, member.id);
         return;
       }
 
-      const { member, guild } = newState;
-      const vc = guild.channels.cache.get(newState.channelId);
-      const vcCount = vc.members.size;
-      const { emoji } = getGameActivity(
-        member,
-        settings.emojiMap,
-        settings.defaultEmoji
-      );
+      // 2) Leave
+      if (leaveChan && !joinChan) {
+        stats.logLeave(oldS.guild.id, leaveChan, oldS.member.id);
+        return;
+      }
 
-      const content = `${emoji} **${member.displayName}** joined **${vc.name}** (👥 ${vcCount}/${settings.maxVCSize})`;
-      sendMessage(newState.channelId, content);
-
-      try {
-        statsTracker.logJoin(member.id);
-      } catch (e) {
-        console.error('Stats log failed:', e);
+      // 3) Channel-Switch
+      if (leaveChan && joinChan && leaveChan !== joinChan) {
+        stats.logLeave(oldS.guild.id, leaveChan, oldS.member.id);
+        const member = newS.member;
+        const vc     = newS.guild.channels.cache.get(joinChan);
+        const { emoji } = getGameActivity(member, settings.emojiMap, settings.defaultEmoji);
+        sendMessage(joinChan,
+          `${emoji} **${member.displayName}** switched to **${vc.name}**`
+        );
+        stats.logJoin(guildId, joinChan, member.id);
       }
     });
   }

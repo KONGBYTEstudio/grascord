@@ -1,4 +1,5 @@
 {
+  "storage": "json",
   "emojiMap": {
     "Valorant": "🧨",
     "League of Legends": "🧙‍♂️",
@@ -7,11 +8,11 @@
   },
   "defaultEmoji": "🎮",
   "maxVCSize": 5,
-
   "puns": [
     "Ich hab' mehr Puns als du Memes!",
     "Zeit für 'nen Joint – äh, ich meine Punkt!",
-    "Unsere Wortspiele sind schärfer als Chili."
+    "Unsere Wortspiele sind schärfer als Chili.",
+    "Du Hundius"
   ],
   "punsByCategory": {
     "weed": [
@@ -27,19 +28,35 @@
       "Ein gutes Wortspiel kann tödlich sein… vor Lachen."
     ]
   },
-
+  "icebreakerIntervalMin": 30,
+  "reactChance": 0.05,
+  "reactions": ["😂","🔥","💯","👍","🤣"],
+  "reactionGifs": [
+    "https://media.giphy.com/media/l0MYA4wRUiTiJVp6I/giphy.gif",
+    "https://media.giphy.com/media/3oEjI6SIIHBdRxXI40/giphy.gif"
+  ],
+  "rageTaunts": [
+    "Schon genug Frust abgelassen, <user>?",
+    "Rage-Quit? Aber hallo!",
+    "Na, wieder die Nerven verloren?",
+    "Take a break, <user>!"
+  ],
   "modules": {
-  "voicejoint": true,
-  "waszocken": true,
-  "help": true,
-  "module": true,
-  "modules": true,
-  "summon": true,
-  "switch": true,
-  "settings": true,
-  "welcome": true,
-  "leaderboard": true,
-  "pun": true,
-  "steam": true 
+    "voicejoint": true,
+    "waszocken": true,
+    "help": true,
+    "module": true,
+    "modules": true,
+    "summon": true,
+    "switch": true,
+    "settings": true,
+    "welcome": true,
+    "leaderboard": true,
+    "pun": true,
+    "steam": true,
+    "punEngine": true,
+    "icebreaker": true,
+    "rageTracker": true,
+    "reactionEngine": true
   }
 }

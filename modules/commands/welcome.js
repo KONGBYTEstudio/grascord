@@ -10,6 +10,12 @@ module.exports = {
   • Voice-Joins posten automatisch hier.
   • Admins können Module per **/module** ein-/ausschalten.
   `);
+      message.author.send(`• Du kannst Module, die du einstellen möchtest, per **/module** aufrufen.
+      `);
+      message.author.send(`• Du kannst auch **/module** aufrufen, um alle Module anzuzeigen.
+      `);
+      message.author.send(`• Du kannst auch **/feedback** geben, wenn du Ideen hast.
+      `);
       message.reply('Ich habe dir eine DM geschickt!');
     }
   };

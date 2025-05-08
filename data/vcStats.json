@@ -1,3 +1,29 @@
 {
-  "565299716112515096": 5
+  "715279011810508954": {
+    "715725867019403304": {
+      "joins": 2,
+      "totalTime": 13812,
+      "lastJoinTimestamps": {}
+    },
+    "1083431968483582003": {
+      "joins": 1,
+      "totalTime": 4386,
+      "lastJoinTimestamps": {}
+    },
+    "821152310243491880": {
+      "joins": 1,
+      "totalTime": 2560,
+      "lastJoinTimestamps": {}
+    },
+    "1337923820169990225": {
+      "joins": 1,
+      "totalTime": 2696,
+      "lastJoinTimestamps": {}
+    },
+    "715594355192234188": {
+      "joins": 2,
+      "totalTime": 65120,
+      "lastJoinTimestamps": {}
+    }
+  }
 }

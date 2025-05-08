@@ -2,6 +2,7 @@
 
 require('dotenv').config();
 const fs = require('fs');
+const path = require('path');
 const axios = require('axios');
 const {
   Client,
@@ -10,7 +11,10 @@ const {
   Collection,
   PermissionFlagsBits
 } = require('discord.js');
-const settings = require('./config/settings.json');
+
+// JSON manuell laden, statt require()
+const settingsPath = path.join(__dirname, 'config', 'settings.json');
+const settings = JSON.parse(fs.readFileSync(settingsPath, 'utf8'));
 
 // Prefixes
 const PREFIXES = ['!', '/'];
@@ -37,8 +41,11 @@ if (process.env.USE_WEBHOOKS === 'true' && process.env.CHANNELS_WEBHOOKS) {
 }
 async function sendMessage(channelId, content) {
   if (webhookMap[channelId]) {
-    try { await axios.post(webhookMap[channelId], { content }); }
-    catch (e) { console.error('Webhook failed:', e); }
+    try {
+      await axios.post(webhookMap[channelId], { content });
+    } catch (e) {
+      console.error('Webhook failed:', e);
+    }
   } else {
     const ch = client.channels.cache.get(channelId);
     if (ch?.isTextBased()) {
@@ -49,21 +56,42 @@ async function sendMessage(channelId, content) {
 
 // ─── Stats-Tracker ────────────────────────────────────────────────────────────
 const statsTracker = require('./modules/statsTracker');
-function logJoin(id) { statsTracker.logJoin(id); }
+function logJoin(id) {
+  statsTracker.logJoin(id);
+}
 
 // ─── Presence-Tracker ─────────────────────────────────────────────────────────
 const presence = require('./modules/presenceTracker');
 
+// ─── Fun-Module init ──────────────────────────────────────────────────────────
+const Icebreaker     = require('./modules/fun/icebreaker');
+const PunEngine      = require('./modules/fun/punEngine');
+const RageTracker    = require('./modules/fun/rageTracker');
+const ReactionEngine = require('./modules/fun/reactionEngine');
+
+if (settings.modules.icebreaker) {
+  Icebreaker.init(client, settings, sendMessage);
+}
+if (settings.modules.rageTracker) {
+  RageTracker.init(client, settings, sendMessage);
+}
+if (settings.modules.reactionEngine) {
+  ReactionEngine.init(client, settings);
+}
+
 // ─── Commands laden ───────────────────────────────────────────────────────────
 client.commands = new Collection();
-for (const file of fs.readdirSync('./modules/commands').filter(f => f.endsWith('.js'))) {
+for (const file of fs
+  .readdirSync(path.join(__dirname, 'modules', 'commands'))
+  .filter(f => f.endsWith('.js'))
+) {
   const cmd = require(`./modules/commands/${file}`);
   client.commands.set(cmd.name, cmd);
 }
 
 // ─── VoiceJoint (togglebar) ──────────────────────────────────────────────────
 const VoiceJoint = require('./modules/voicejoint');
-if (settings.modules.voicejoint === true) {
+if (settings.modules.voicejoint) {
   VoiceJoint.init(client, settings, sendMessage);
 }
 
@@ -76,14 +104,11 @@ client.once('ready', () => {
 // ─── Message-Handler für Text-Commands ────────────────────────────────────────
 client.on('messageCreate', message => {
   const prefix = PREFIXES.find(p => message.content.startsWith(p));
-
-  // merged nested ifs: Bot-Autoreply + fehlender Prefix
   if (message.author.bot || !prefix) {
     return;
   }
 
   console.log(`[MSG] ${message.author.tag}: ${message.content}`);
-
   const [name, ...args] = message.content
     .slice(prefix.length)
     .trim()
@@ -95,8 +120,7 @@ client.on('messageCreate', message => {
     return;
   }
 
-  // merged nested if: Admin-Flag und fehlende Rechte
-  if (command.adminOnly === true && !message.member.permissions.has(PermissionFlagsBits.Administrator)) {
+  if (command.adminOnly && !message.member.permissions.has(PermissionFlagsBits.Administrator)) {
     return message.reply('Du brauchst Admin-Rechte.');
   }
 
@@ -109,7 +133,7 @@ client.on('messageCreate', message => {
 });
 
 // ─── Fallback Voice Joins, wenn VoiceJoint deaktiviert ────────────────────────
-if (settings.modules.voicejoint !== true) {
+if (!settings.modules.voicejoint) {
   client.on('voiceStateUpdate', (oldState, newState) => {
     if (!newState.channelId || oldState.channelId === newState.channelId) {
       return;
