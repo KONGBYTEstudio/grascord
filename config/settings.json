@@ -7,30 +7,39 @@
   },
   "defaultEmoji": "🎮",
   "maxVCSize": 5,
-  {
-    // ...
-    "puns": [
-      "Ich hab' mehr Puns als du Memes!",
-      "Zeit für 'nen Joint – ähm, ich meine Punkt!",
-      "Unsere Wortspiele sind schärfer als Chili."
+
+  "puns": [
+    "Ich hab' mehr Puns als du Memes!",
+    "Zeit für 'nen Joint – äh, ich meine Punkt!",
+    "Unsere Wortspiele sind schärfer als Chili."
+  ],
+  "punsByCategory": {
+    "weed": [
+      "Gras ist grüner auf der anderen Seite.",
+      "Hier riecht’s nach High-Spirits!"
     ],
-    "punsByCategory": {
-      "weed": ["Gras ist grüner auf der anderen Seite."],
-      "gaming": ["In-game Puns bringen extra XP."]
-    },
-    // ...
-  }
-  ,
+    "gaming": [
+      "In-Game Puns bringen extra XP.",
+      "Level up your wordplay!"
+    ],
+    "general": [
+      "Wer zuletzt lacht, hat den besten Pun!",
+      "Ein gutes Wortspiel kann tödlich sein… vor Lachen."
+    ]
+  },
+
   "modules": {
-    "waszocken": true,
-    "summon": true,
-    "switch": true,
-    "help": true,
-    "settings": true,
-    "leaderboard": true,
-    "welcome": true,
-    "punEngine": true,
-    "voicejoint": true,
-    "module": true
+  "voicejoint": true,
+  "waszocken": true,
+  "help": true,
+  "module": true,
+  "modules": true,
+  "summon": true,
+  "switch": true,
+  "settings": true,
+  "welcome": true,
+  "leaderboard": true,
+  "pun": true,
+  "steam": true 
   }
 }
